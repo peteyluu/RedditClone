@@ -1,0 +1,20 @@
+<h1><%= @sub.title %></h1>
+
+<p><b>By: <%= @sub.moderator.email %></b></p>
+<b>Description</b>
+<p><%= @sub.description %></p>
+
+<% if current_user.id == @sub.moderator_id %>
+  <%= link_to "Edit", edit_sub_url %>
+<% end %>
+<%= link_to "Make New Post", new_post_url %>
+
+<p>
+  <b>Posts:</b>
+  <br>
+  <ul>
+    <% @sub.posts.each do |post| %>
+      <li><%= link_to post.title, post_url(post) %></li>
+    <% end %>
+  </ul>
+</p>

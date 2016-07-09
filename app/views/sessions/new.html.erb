@@ -1,0 +1,18 @@
+<h1>Sign In!</h1>
+
+<%= render "shared/errors" %>
+
+<form action="<%= session_url %>" method="post">
+  <%= auth_token %>
+  <label for="session_email">Email:</label><br>
+  <input type="text"
+         name="session[email]"
+         id="session_email">
+  <br>
+  <label for="session_password">Password:</label><br>
+  <input type="password"
+         name="session[password]"
+         id="session_password">
+  <br>
+  <input type="submit" value="Submit">
+</form>

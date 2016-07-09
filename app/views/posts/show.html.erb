@@ -1,0 +1,37 @@
+<h1><%= @post.title %> by <%= @post.user.email %></h1>
+
+<p>
+  <b>Content:</b>
+  <br>
+  <%= @post.content %>
+</p>
+
+<%= link_to "Edit", edit_post_url(@post) %>
+
+<p>
+  <b>Subs:</b>
+  <br>
+  <ul>
+    <% @post.subs.each do |curr_sub| %>
+      <li><%= link_to curr_sub.title, sub_url(curr_sub) %></li>
+    <% end %>
+  </ul>
+</p>
+
+<h3>Comments</h3>
+<%= link_to "Comment on this post!", new_post_comment_url(@post) %>
+
+<ul>
+  <% @post.comments.where(parent_comment_id: nil).each do |top_level_comment| %>
+    <li>
+      <%= link_to top_level_comment.content, comment_url(top_level_comment) %>
+    </li>
+    <% if top_level_comment.has_child_comments? %>
+      <ul>
+        <% @post.comments.where(parent_comment_id: top_level_comment.id).each do |child_comment| %>
+          <li><%= link_to child_comment.content, comment_url(child_comment) %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% end %>
+</ul>
