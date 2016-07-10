@@ -15,4 +15,14 @@ class Post < ActiveRecord::Base
   has_many :post_subs, dependent: :destroy
   has_many :subs, through: :post_subs, source: :sub
   has_many :comments
+
+  def comments_by_parent_id
+    @comments_by_parent_id = Hash.new { |hash, key| hash[key] = [] }
+    
+    self.comments.includes(:user).each do |comment|
+      @comments_by_parent_id[comment.parent_comment_id] << comment
+    end
+
+    @comments_by_parent_id
+  end
 end

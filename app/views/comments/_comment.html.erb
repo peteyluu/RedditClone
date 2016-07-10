@@ -1,0 +1,10 @@
+<ul>
+  <% comments_by_parent_id[parent_comment.id].each do |child_comment| %>
+    <li>
+      <%= link_to child_comment.content, comment_url(child_comment) %>
+      <%= render "comments/comment",
+          parent_comment: child_comment,
+          comments_by_parent_id: comments_by_parent_id %>
+    </li>
+  <% end %>
+</ul>
