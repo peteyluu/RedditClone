@@ -36,16 +36,19 @@ class PostsController < ApplicationController
     redirect_to post_url(@post)
   end
 
-  # Structured the HTML form to upload an array of sub_ids nested under post
-  # Updated the PostsController#post_params to accept an array of sub_ids
+  def upvote
+    @post = Post.find_by_id(params[:id])
+    @vote = Vote.new(value: 1, votable_id: @post.id, votable_type: "Post")
+    @vote.save
+    redirect_to post_url(@post)
+  end
 
-  # You should now be able to associate a post to the subs that you selected.
-  # This works b/c the Post#subs association gives us a method, Post#sub_ids=,
-  # which will automatically create/destroy the neccessary entries in the
-  # PostSub join table.
-  # Recall that Rails will call a setter method for each attribute that you
-  # assign in Post.new or Post#update, so if one of the keys in our attributes
-  # is sub_ids, Rails will automatically call Post#sub_ids=.
+  def downvote
+    @post = Post.find_by_id(params[:id])
+    @vote = Vote.new(value: -1, votable_id: @post.id, votable_type: "Post")
+    @vote.save
+    redirect_to post_url(@post)
+  end
 
   private
   def post_params

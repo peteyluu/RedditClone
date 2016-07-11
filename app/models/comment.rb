@@ -27,6 +27,7 @@ class Comment < ActiveRecord::Base
     foreign_key: :parent_comment_id,
     primary_key: :id
   )
+  has_many :votes, as: :votable
 
   def child_comments
     @comments = Comment.where(parent_comment_id: self.id)
@@ -40,5 +41,9 @@ class Comment < ActiveRecord::Base
     @comments = Comment.where(parent_comment_id: self.id)
     return false if @comments.empty?
     true
+  end
+
+  def vote_sum_votable_id
+    Vote.where(votable_id: self.id).sum(:value)
   end
 end

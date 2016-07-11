@@ -19,6 +19,20 @@ class CommentsController < ApplicationController
     render :show
   end
 
+  def upvote
+    @comment = Comment.find_by_id(params[:id])
+    @vote = Vote.new(value: 1, votable_id: @comment.id, votable_type: "Comment")
+    @vote.save
+    redirect_to comment_url(@comment)
+  end
+
+  def downvote
+    @comment = Comment.find_by_id(params[:id])
+    @vote = Vote.new(value: -1, votable_id: @comment.id, votable_type: "Comment")
+    @vote.save
+    redirect_to comment_url(@comment)
+  end
+
   private
   def params_comment
     params.require(:comment).permit(:content, :user_id, :post_id, :parent_comment_id)

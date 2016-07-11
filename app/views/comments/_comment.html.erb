@@ -1,6 +1,7 @@
 <ul>
   <% comments_by_parent_id[parent_comment.id].each do |child_comment| %>
     <li>
+      (<%= child_comment.vote_sum_votable_id %>)
       <%= link_to child_comment.content, comment_url(child_comment) %>
       <%= render "comments/comment",
           parent_comment: child_comment,

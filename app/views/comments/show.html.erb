@@ -1,5 +1,12 @@
 <%= @comment.content %> by <%= @comment.user.email %>
 <br>
+<%= @comment.vote_sum_votable_id %> upvotes
+<br>
+<br>
+<%= button_to "Upvote", upvote_comment_url(@comment) %>
+<%= button_to "Downvote", downvote_comment_url(@comment) %>
+<br>
+
 <b>Reply to this comment:</b>
 
 <% if !flash.now[:errors].nil? %>
